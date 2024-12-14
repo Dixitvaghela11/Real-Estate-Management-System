@@ -1,0 +1,35 @@
+<?php
+// Database connection
+$conn = new mysqli('localhost', 'root', '', 'realestate');
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $auser = $_POST['auser'];
+    $aemail = $_POST['aemail'];
+    $apass = password_hash($_POST['apass'], PASSWORD_BCRYPT);  // Hash password
+    $aphone = $_POST['aphone'];
+    $adob = $_POST['adob'];
+
+    $sql = "INSERT INTO admin (auser, aemail, apass, aphone, adob) VALUES ('$auser', '$aemail', '$apass', '$aphone', '$adob')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Registration successful";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    $conn->close();
+}
+?>
+<form action="" method="POST">
+  Username: <input type="text" name="auser" required><br>
+  Email: <input type="email" name="aemail" required><br>
+  Password: <input type="password" name="apass" required><br>
+  Phone: <input type="text" name="aphone" required><br>
+  Date of Birth: <input type="date" name="adob"><br>
+  <input type="submit" value="Register">
+</form>

@@ -1,0 +1,7 @@
+# Enable mod_rewrite
+RewriteEngine On
+
+# Handle 404 errors
+ErrorDocument 404 /RealEstate/include/404.php
+
+# Other rewrite rules can go here
